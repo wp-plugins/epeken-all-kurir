@@ -15,7 +15,7 @@ Stable tag: trunk
 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Epeken-All-Kurir is calculated shipping plugin featuring all shipping company (JNE,TIKI,POS Indonesia,RPX,ESL) for Indonesia e-commerce.  
+Epeken-All-Kurir is calculated shipping plugin featuring some shipping companies (JNE,TIKI,POS Indonesia,RPX,ESL) for Indonesia e-commerce.  
 
 == Description ==
 
