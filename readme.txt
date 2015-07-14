@@ -19,7 +19,7 @@ Epeken-All-Kurir is calculated shipping plugin featuring all shipping company (J
 
 == Description ==
 
-Epeken-All-Kurir  Plugin for woocommerce is a wordpress plugin for woocommerce shipping method extension featuring all shipping company running together for Indonesia e-commerce. User will access shipping cost data which is in our server. There are millions records of shipping cost data which is not needed to user loads all data locally in user's side. that's why User needs license to use this plugin. Request license for free by submitting your request from our [website](http://www.epeken.com/contact). License helps us to manage priviledge and preference in accessing shipping cost data which user needs to retreive.
+Epeken-All-Kurir Plugin for woocommerce is a calculated shipping plugin for woocommerce featuring some shipping companies all in one plugin for Indonesia e-commerce. We have JNE, TIKI, Pos Indonesia, RPX and ESL shipping cost information. User will access shipping cost data which is in our server. There are million of shipping cost data records which are not needed to user to load all data locally in user's side. that's why User needs license to use this plugin to retrieve this information. Request license for free by submitting your request from our [website](http://www.epeken.com/contact). License helps us to manage priviledge and preference in accessing shipping cost data which user needs to retreive.
 
 This plugin is developed by epeken. copyright (c) 2015 by [epeken](http://www.epeken.com)
 
