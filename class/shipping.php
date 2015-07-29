@@ -21,8 +21,33 @@
 			$this -> title = 'Epeken Courier';
 			$this -> is_free_shipping = false;
 			$this -> init();		
-			 $this -> array_of_tarif = array();	
+			$this -> array_of_tarif = array();	
+			$this -> initiate_epeken_options();
 		}
+
+ 		public function initiate_epeken_options() {
+                        if(get_option('epeken_free_pc',false) === false){
+                                add_option('epeken_free_pc','','','yes');
+                        }
+                        if(get_option('epeken_free_pc_q',false) === false) {
+                                add_option('epeken_free_pc_1','','','yes');
+                        }
+                        if(get_option('epeken_enabled_jne',false) === false) {
+                                add_option('epeken_enabled_jne','','','yes');
+                        }
+                        if(get_option('epeken_enabled_tiki',false) === false) {
+                                add_option('epeken_enabled_tiki','','','yes');
+                        }
+                        if(get_option('epeken_enabled_pos',false) === false) {
+                                add_option('epeken_enabled_pos','','','yes');
+                        }
+                        if(get_option('epeken_enabled_rpx',false) === false) {
+                                add_option('epeken_enabled_rpx','','','yes');
+                        }
+                        if(get_option('epeken_enabled_esl',false) === false) {
+                                add_option('epeken_enabled_esl','','','yes');
+                        }
+                }
 
 
 		public function create_cek_resi_page(){
@@ -229,6 +254,9 @@
                                                         'label'                 => __( 'Enable this shipping method', 'woocommerce' ),
                                                         'default'               => 'yes',
                                                 	),
+                                                 'panel_enable_kurir' => array(
+                                                        'type' => 'panel_enable_kurir',
+                                                ),
 						'data_kota_asal' => array(
                                                         'title' => __('Data Kota Asal','woocommerce'),
                                                         'type' => 'select',
@@ -257,6 +285,25 @@
 		 <?php $this->generate_settings_html(); ?>
 		 </table> <?php
  	}
+
+	public function generate_panel_enable_kurir_html() {
+                ob_start();
+                 ?>
+                <tr>
+                <th scope="row" class="titledesc">Pilih Kurir Yang di-enable</th>
+                <td>
+                        <?php $en_jne = get_option('epeken_enabled_jne'); $en_tiki = get_option('epeken_enabled_tiki'); $en_pos = get_option('epeken_enabled_pos'); $en_rpx = get_option('epeken_enabled_rpx'); $en_esl = get_option('epeken_enabled_esl');?>
+                        <p><div style="position: relative; float: left; padding: 5px"><input name="enabled_jne" id = "enabled_jne" type="checkbox" <?php if ($en_jne === "on"){echo "checked";} ?>>JNE</input></div></p>
+                        <p><div style="position: relative; float: left; padding: 5px"><input name="enabled_tiki" id="enabled_tiki" type="checkbox" <?php if ($en_tiki === "on"){echo "checked";} ?>>TIKI</input></div></p>
+                        <p><div style="position: relative; float: left; padding: 5px"><input name="enabled_pos" id = "enabled_pos" type="checkbox" <?php if ($en_pos === "on"){echo "checked";} ?>>POS Indonesia</input></div></p>
+                        <p><div style="position: relative; float: left; padding: 5px"><input name="enabled_rpx" id="enabled_rpx" type="checkbox" <?php if ($en_rpx === "on"){echo "checked";} ?>>RPX</input></div></p>
+                        <p><div style="position: relative; float: left; padding: 5px"><input name="enabled_esl" id="enabled_esl" type="checkbox" <?php if ($en_esl === "on"){echo "checked";} ?>>ESL</input></div></p>
+                </td>
+                </tr>
+                 <?php
+                return ob_get_clean();
+        }
+
 
 	
 	public function get_checkout_post_data($itemdata){
@@ -337,10 +384,35 @@
    		       foreach($services as $services_element) {
                          $id = $services_element['kurir'].'_'.$services_element['service'];
                          $label = strtoupper($services_element['kurir'].' '.$services_element['service']);
+				if ($this -> is_shipping_exclude($label))
+                                continue;
                          $cost = $services_element['rate'];
                          array_push($this -> array_of_tarif, array('id' => $id,'label' => $label, 'cost' => $cost));
                         }
 	}
+
+	 public function is_shipping_exclude ($shipping_label) {
+                $ret = false;
+                if ($shipping_label === 'JNE SPS' || $shipping_label === 'JNE CTSSPS')  {
+                        $ret = true;
+                        return $ret;
+                }
+                $en_jne = get_option('epeken_enabled_jne'); $en_tiki = get_option('epeken_enabled_tiki'); $en_pos = get_option('epeken_enabled_pos');
+                $en_rpx = get_option('epeken_enabled_rpx'); $en_esl = get_option('epeken_enabled_esl');
+                if (empty($en_jne) && strpos(substr($shipping_label,0,3),"JNE") !== false) {
+                        $ret = true;
+                }else if(empty($en_tiki) && strpos(substr($shipping_label,0,3),"TIK") !== false) {
+                        $ret = true;
+                }else if(empty($en_pos) && strpos(substr($shipping_label,0,3),"POS") !== false)  {
+                        $ret = true;
+                }else if(empty($en_rpx) && strpos(substr($shipping_label,0,3),"RPX") !== false) {
+                        $ret = true;
+                }else if(empty($en_esl) && strpos(substr($shipping_label,0,3),"ESL") !== false) {
+                        $ret = true;
+                }
+                return $ret;
+        }
+
 
 	public function map_destination_province(){
 		if($this->destination_province === "Nanggroe Aceh Darussalam (NAD)"){
