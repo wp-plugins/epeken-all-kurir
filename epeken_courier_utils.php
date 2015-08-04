@@ -3,8 +3,10 @@
 
   include_once('includes/query.php');
   function epeken_get_list_kecamatan() {
-	$kotakab = sanitize_text_field($_GET['kota']);
-	$nextnonce = sanitize_text_field($_GET['nextNonce']);
+	$kotakab = isset($_GET['kota']) ? $_GET['kota'] : '';
+	$nextnonce = isset($_GET['nextNonce']) ? $_GET['nextNonce'] : '';
+	$kotakab = sanitize_text_field($kotakab);
+	$nextnonce = sanitize_text_field($nextnonce);
 	
 	if(!wp_verify_nonce($nextnonce,'myajax-next-nonce')){
 			die('Invalid Invocation');
