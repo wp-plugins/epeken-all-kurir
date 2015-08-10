@@ -354,8 +354,15 @@
                                 }
                           $json = json_decode($content_tarif);
                           $status = $json -> {'status'} -> {'code'};
+
+			  if(empty($status)) {
+                                array_push($this -> array_of_tarif, array('id' => 'Epeken-Courier','label' => 'Terjadi kesalahan. Silakan mencoba kembali atau menghubungi <a href="http://www.epeken.com/contact">team support</a>.', 'cost' => '0'));
+                                return;
+                         }
+
+
  			  if ($status != 200){
-                                array_push($this -> array_of_tarif, array('id' => 'Epeken-Courier','label' => 'Error '.$status.':'.$json -> {'status'} -> {'description'}.'. Please contact <a href="http://www.epeken.com/contact">Epeken Support</a> to get valid license.', 'cost' => '0'));
+                                array_push($this -> array_of_tarif, array('id' => 'Epeken-Courier','label' => 'Error '.$status.':'.$json -> {'status'} -> {'description'}.' Silakan mencoba kembali atau menghubungi <a href="http://www.epeken.com/contact">team support</a>.', 'cost' => '0'));
                                 return;
                           }
 
@@ -393,10 +400,12 @@
 
 	 public function is_shipping_exclude ($shipping_label) {
                 $ret = false;
-                if ($shipping_label === 'JNE SPS' || $shipping_label === 'JNE CTSSPS')  {
+
+ if ($shipping_label === 'JNE SPS' || $shipping_label === 'JNE CTCSPS' || $shipping_label === 'TIKI SDS' || $shipping_label === 'RPX SDP' || $shipping_label === 'JNE CTCBDO' || $shipping_label === 'JNE PELIK')  {
                         $ret = true;
                         return $ret;
                 }
+
                 $en_jne = get_option('epeken_enabled_jne'); $en_tiki = get_option('epeken_enabled_tiki'); $en_pos = get_option('epeken_enabled_pos');
                 $en_rpx = get_option('epeken_enabled_rpx'); $en_esl = get_option('epeken_enabled_esl');
                 if (empty($en_jne) && strpos(substr($shipping_label,0,3),"JNE") !== false) {
