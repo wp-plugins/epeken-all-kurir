@@ -69,3 +69,5 @@ Once plugin is installed please activate it from activate link in the wordpress 
 - First Release
 = 1.0.1 =
 - Add new option in administrator Epeken Courier dashboard to enable/disable some courier companies so that users can have options which courier companies they are going to use.
+= 1.0.2 =
+- Compatible with woocommerce v.2.4

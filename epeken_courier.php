@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 Plugin Name: Epeken All Kurir Plugin - Free Version
 Plugin URI: https://wordpress.org/plugins/epeken-all-kurir
 Description: Epeken Calculated Shipping Plugin with all shipping courier (JNE,TIKI,POS,RPX,ESL) for Indonesia Market, with Bank Mandiri, BCA and BNI payment method. This plugin needs valid license. Go <a href="http://localhost/tokosatu/wp-admin/options-general.php?page=epeken-all-kurir/epeken_courier.php">here</a> to activate your license or request valid license by sending email to <a href="mailto:support@epeken.com">epeken</a> to request valid license.
-Version: 1.0.1
+Version: 1.0.2
 Author: www.epeken.com
 Author URI: http://www.epeken.com
 License: GPL2
